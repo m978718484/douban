@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 #coding: utf-8
-from __future__ import division
 from selenium import webdriver
 from selenium.webdriver.phantomjs.service import Service as PhantomJSService
 from gevent import monkey
 from BeautifulSoup import BeautifulSoup
-from progressbar import *
 monkey.patch_all()
 import gevent
 import sys
@@ -18,14 +16,9 @@ def doJob(urls,name):
 	    ]
 	browser = webdriver.PhantomJS(executable_path=r'D:\TestProject\phantomjs\bin\phantomjs.exe',service_args=service_args)
 	wr = open('done/'+name+'.txt','w')
-	i = 1
-	totalCount = len(urls)
-	pb = progressbar(totalCount, "*",name)
 	for url in urls:
 		browser.get(url)
-		pb.progress(i)
-		time.sleep(0.5)
-		i+=1
+		time.sleep(1)
 		soup = BeautifulSoup(browser.page_source.encode('utf-8'))
 		findNames = soup.findAll('div',attrs={'class':'name'})
 		if findNames is None:
